@@ -1,0 +1,14 @@
+#version 330
+layout (location = 0) in vec3 cPosition;
+layout (location = 1) in vec2 aTexCoord;
+
+uniform mat4 perspective_matrix;
+uniform mat4 ModelViewMatrix;
+
+out vec2 TexCoord;
+
+void main()
+{
+gl_Position = perspective_matrix*ModelViewMatrix*vec4(cPosition, 1.0);
+TexCoord = aTexCoord;
+}

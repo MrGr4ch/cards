@@ -1,0 +1,9 @@
+﻿  main.cpp
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(22,18): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(23,19): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(24,21): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(25,22): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(1032,51): warning C4244: "Argument": Konvertierung von "float" in "GLsizei", möglicher Datenverlust
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(1032,44): warning C4244: "Argument": Konvertierung von "float" in "GLsizei", möglicher Datenverlust
+LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
+  cards.vcxproj -> C:\Users\Robert Horn\Desktop\Project\cards\x64\Debug\cards.exe
