@@ -460,7 +460,7 @@ for (int i = 0; i < size;i++) {
 };
 std::cout << "\n \n";
 */
-/*unsigned int indices[] = {
+unsigned int indices[] = {
     //rim counterclockwise
     0, 1,12,
     1,12,13,
@@ -769,9 +769,9 @@ indices[wi + 11] = 20;
 wi = wi + 12;
 new_vertice = new_vertice + 2;
 
-*/
 
-/*
+
+
 size = sizeof(indices) / sizeof(indices[0]);
 std::cout << size;
 std::cout << "\n";
@@ -786,10 +786,13 @@ for (int i = 0; i < 480; i=i+5) {
     vert[i] = vertices[help_one];
     vert[i+1] = vertices[help_one+1]; 
     vert[i + 2] = vertices[help_one + 2];
-    vert[i + 3] = ((vertices[help_one] / x_end) * 0.5f)+0.5f;
-    vert[i + 4] = ((vertices[help_one+1] / y_end) * 0.5f) + 0.5f;
+    vert[i + 3] = 1;
+    vert[i + 4] = 1;
     help_one = help_one + 3;
 }
+//((vertices[help_one] / x_end) * 0.5f)+0.5f;
+//((vertices[help_one+1] / y_end) * 0.5f) + 0.5f;
+
 size = sizeof(vert) / sizeof(vert[0]);
 std::cout << size;
 std::cout << "\n";
@@ -797,7 +800,7 @@ for (int i = 0; i < size;i++) {
     std::cout << vert[i];
     std::cout << ", ";
 };
-std::cout << "\n \n";*/
+std::cout << "\n \n";
 
 
 
@@ -807,7 +810,7 @@ GLenum err;
 while ((err = glGetError()) != GL_NO_ERROR) {
     cerr << "1. OpenGL error: " << err << endl;
 }
-
+/*
 float vert[] = {
     // positions          // texture coords
      0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
@@ -818,7 +821,8 @@ float vert[] = {
 unsigned int indices[] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
-};
+};*/
+
 size = sizeof(indices) / sizeof(indices[0]);
 
 //creation of buffer object, array and element object
@@ -832,12 +836,16 @@ glBindVertexArray(VAO);
 glBindBuffer(GL_ARRAY_BUFFER, VBO);
 glBufferData(GL_ARRAY_BUFFER, sizeof(vert), vert, GL_STATIC_DRAW);
 
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 glEnableVertexAttribArray(0);
 
-glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+glEnableVertexAttribArray(1);
+
+
 
 //unsigned int size_of_indices_array = sizeof(indices)/sizeof(indices[1]);
 
@@ -909,7 +917,11 @@ if (!iOK) {
 }
 glUseProgram(prg_id);
 
-
+//attach texture
+glActiveTexture(GL_TEXTURE0);
+glBindTexture(GL_TEXTURE_2D, texture);
+int texture_location = glGetUniformLocation(prg_id, "texture_one");
+glUniform1i(texture_location, texture);
 
 
 //perspective matrix
@@ -1033,6 +1045,7 @@ while (!glfwWindowShouldClose(window))
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
     glUseProgram(prg_id);
     glBindVertexArray(VAO);
