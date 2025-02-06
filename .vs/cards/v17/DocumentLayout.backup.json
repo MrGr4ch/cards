@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|solutionrelative:cards\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\vertex_shader_sourcecode.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|solutionrelative:cards\\vertex_shader_sourcecode.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\fragment_shader_sourcecode.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|solutionrelative:cards\\fragment_shader_sourcecode.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\vertex_shader_sourcecode.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{AF3DA2D1-3F3D-4A46-8952-4E3E4048CE87}|cards\\cards.vcxproj|solutionrelative:cards\\vertex_shader_sourcecode.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,20 +26,20 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "fragment_shader_sourcecode.txt",
               "DocumentMoniker": "C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\fragment_shader_sourcecode.txt",
               "RelativeDocumentMoniker": "cards\\fragment_shader_sourcecode.txt",
               "ToolTip": "C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\fragment_shader_sourcecode.txt",
               "RelativeToolTip": "cards\\fragment_shader_sourcecode.txt",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-01-31T15:04:46.099Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "vertex_shader_sourcecode.txt",
               "DocumentMoniker": "C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\vertex_shader_sourcecode.txt",
               "RelativeDocumentMoniker": "cards\\vertex_shader_sourcecode.txt",
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "cards\\main.cpp",
               "ToolTip": "C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\main.cpp",
               "RelativeToolTip": "cards\\main.cpp",
-              "ViewState": "AgIAAAMEAAAAAAAAAAAqwPkDAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAcDAAAAAAAAAAAqwPwDAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-01-28T14:44:18.382Z",
               "EditorCaption": ""

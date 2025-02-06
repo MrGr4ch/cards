@@ -13,7 +13,7 @@ void main()
 if (z_negative == 1){
 	fragColor = texture(texture1, TexCoord);
 }else{
-	fragColor = texture(texture2, TexCoord);
+	fragColor = texture(texture2, vec2(1.0-TexCoord.x, TexCoord.y));
 }
 }
 //test_cases
