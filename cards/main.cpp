@@ -22,7 +22,8 @@ unsigned int prg_id;
 float card_width = 6.35;
 float card_height = 8.89;
 float corner_radius = 0.35;
-float card_thickness = 0.03048;
+float card_thickness = 0.5;
+//float card_thickness = 0.03048;
 
 //// check OpenGL error
 //GLenum err;
@@ -786,8 +787,8 @@ for (int i = 0; i < 480; i=i+5) {
     vert[i] = vertices[help_one];
     vert[i+1] = vertices[help_one+1]; 
     vert[i + 2] = vertices[help_one + 2];
-    vert[i + 3] = 1;
-    vert[i + 4] = 1;
+    vert[i + 3] = ((vertices[help_one] / x_end) * 0.5f) + 0.5f;
+    vert[i + 4] = ((vertices[help_one + 1] / y_end) * 0.5f) + 0.5f;
     help_one = help_one + 3;
 }
 //((vertices[help_one] / x_end) * 0.5f)+0.5f;
@@ -801,7 +802,7 @@ for (int i = 0; i < size;i++) {
     std::cout << ", ";
 };
 std::cout << "\n \n";
-
+/*
 
 
 
@@ -809,20 +810,49 @@ unsigned int texture = load_texture();
 GLenum err;
 while ((err = glGetError()) != GL_NO_ERROR) {
     cerr << "1. OpenGL error: " << err << endl;
-}
+}*/
 /*
 float vert[] = {
     // positions          // texture coords
-     0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
-     0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
-    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
-    -0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
+     0.5f,  0.5f, -0.5f,   1.0f, 1.0f, // top right
+     0.5f, -0.5f, -0.5f,   1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, -0.5f,   0.0f, 0.0f, // bottom left
+    -0.5f,  0.5f, -0.5f,   0.0f, 1.0f,  // top left 
+
+    0.5f,  0.5f, 0.5f,   1.0f, 1.0f, // top right
+     0.5f, -0.5f, 0.5f,   1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, 0.5f,   0.0f, 0.0f, // bottom left
+    -0.5f,  0.5f, 0.5f,   0.0f, 1.0f  // top left 
 };
-unsigned int indices[] = {
+unsigned int indices_test[] = {
     0, 1, 3, // first triangle
-    1, 2, 3  // second triangle
+    1, 2, 3,  // second triangle 
+
+    1, 5, 2, // first triangle
+    5, 2, 6,  // second triangle
+
+    0, 4, 1, // first triangle
+    4, 1, 5, // second triangle
+
+    2, 6, 3, // first triangle
+    6, 3, 7,  // second triangle
+
+    3, 7, 4, // first triangle
+    7, 4, 0, // second triangle
+
+    4, 5, 7, // first triangle
+    5, 6, 7,  // second triangle
 };*/
 
+
+size = sizeof(vert) / sizeof(vert[0]);
+std::cout << size;
+std::cout << "\n";
+for (int i = 0; i < size;i++) {
+    std::cout << vert[i];
+    std::cout << ", ";
+};
+std::cout << "\n \n";
 size = sizeof(indices) / sizeof(indices[0]);
 
 //creation of buffer object, array and element object
@@ -836,16 +866,14 @@ glBindVertexArray(VAO);
 glBindBuffer(GL_ARRAY_BUFFER, VBO);
 glBufferData(GL_ARRAY_BUFFER, sizeof(vert), vert, GL_STATIC_DRAW);
 
-glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 glEnableVertexAttribArray(0);
 
-glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 glEnableVertexAttribArray(1);
 
-
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 //unsigned int size_of_indices_array = sizeof(indices)/sizeof(indices[1]);
 
@@ -917,117 +945,81 @@ if (!iOK) {
 }
 glUseProgram(prg_id);
 
-//attach texture
-glActiveTexture(GL_TEXTURE0);
-glBindTexture(GL_TEXTURE_2D, texture);
-int texture_location = glGetUniformLocation(prg_id, "texture_one");
-glUniform1i(texture_location, texture);
+
+//texture
+unsigned int texture1, texture2;
+glGenTextures(1, &texture1);
+glBindTexture(GL_TEXTURE_2D, texture1);
+
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+
+float borderColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+GLenum err;
+while ((err = glGetError()) != GL_NO_ERROR) {
+    cerr << "glTexParameteri. OpenGL error: " << err << endl;
+}
+
+int width_tex, height_tex, nrChannels;
+unsigned char *data = stbi_load("images/terramorphic_expanse.jpg", &width_tex, &height_tex, &nrChannels, 0);
 
 
-//perspective matrix
+if (data)
+{
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_tex, height_tex, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+}
+else
+{
+    std::cout << "Failed to load texture1" << std::endl;
+}
 
-for (int i = 0; i < 16; i++) {
-    perspective_matrix[i] = 0;
-};
-float nearVal = 1.0f;
-float farVal = 15.0f;
-float angle = 30.0f;
-float top = nearVal * tanf(angle / 2.0f);
-float bottom = -top;
-float aspect_ratio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
-float right = aspect_ratio * top;
-float left = -right;
+glGenTextures(1, &texture2);
+glBindTexture(GL_TEXTURE_2D, texture2);
 
-perspective_matrix[0] = (2.0f * nearVal) / (right - left);
-perspective_matrix[8] = (right + left) / (right - left);
-perspective_matrix[5] = (2.0f * nearVal) / (top - bottom);
-perspective_matrix[9] = (top + bottom) / (top - bottom);
-perspective_matrix[10] = -((farVal + nearVal) / (farVal - nearVal));
-perspective_matrix[14] = -((2.0f * farVal * nearVal) / (farVal - nearVal));
-perspective_matrix[11] = -1;
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
-/* Identitymatrix für Tests
-perspective_matrix[0] = 1;
-perspective_matrix[1] = 0;
-perspective_matrix[2] = 0;
-perspective_matrix[3] = 0;
-perspective_matrix[4] = 0;
-perspective_matrix[5] = 1;
-perspective_matrix[6] = 0;
-perspective_matrix[7] = 0;
-perspective_matrix[8] = 0;
-perspective_matrix[9] = 0;
-perspective_matrix[10] = 1;
-perspective_matrix[11] = 0;
-perspective_matrix[12] = 0;
-perspective_matrix[13] = 0;
-perspective_matrix[14] = 0;
-perspective_matrix[15] = 1;*/
+glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
-int perspective_location = glGetUniformLocation(prg_id, "perspective_matrix");
-glUniformMatrix4fv(perspective_location, 1, false, perspective_matrix);
+while ((err = glGetError()) != GL_NO_ERROR) {
+    cerr << "glTexParameteri. OpenGL error: " << err << endl;
+}
 
+data = stbi_load("images/card_back.jpeg", &width_tex, &height_tex, &nrChannels, 0);
+std::cout << width_tex; 
+std::cout <<" \n";
+std::cout << height_tex;
 
+if (data)
+{
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_tex, height_tex, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+}
+else
+{
+    std::cout << "Failed to load texture2" << std::endl;
+}
 
+stbi_image_free(data);
 
+int tex_location = glGetUniformLocation(prg_id, "texture1");
+glUniform1i(tex_location, 0);
+tex_location = glGetUniformLocation(prg_id, "texture2");
+glUniform1i(tex_location, 1);
 
-
-
-
-
-
-
-
-
+//perspective matrix SCR_HEIGHT SCR_WIDTH
+update_perspective_matrix(SCR_WIDTH, SCR_HEIGHT);
 
 //model_view matrix
-float fAngX = rotx * 3.14159265f / 180.0f;
-float fAngY = roty * 3.14159265f / 180.0f;
-for (unsigned int i = 0; i < 16; i++) ModelViewMatrix[i] = 0.0f;
-
-ModelViewMatrix[0] = std::cos(fAngY);
-ModelViewMatrix[2] = -std::sin(fAngY);
-ModelViewMatrix[4] = std::sin(fAngX) * std::sin(fAngY);
-ModelViewMatrix[5] = std::cos(fAngX);
-ModelViewMatrix[6] = std::sin(fAngX) * std::cos(fAngY);
-ModelViewMatrix[8] = std::cos(fAngX) * std::sin(fAngY);
-ModelViewMatrix[9] = -std::sin(fAngX);
-ModelViewMatrix[10] = std::cos(fAngX) * std::cos(fAngY);
-ModelViewMatrix[14] = TransZ;
-ModelViewMatrix[15] = 1.0f;
-
-/* Identitymatrix für Tests
-ModelViewMatrix[0] = 1;
-ModelViewMatrix[1] = 0;
-ModelViewMatrix[2] = 0;
-ModelViewMatrix[3] = 0;
-ModelViewMatrix[4] = 0;
-ModelViewMatrix[5] = 1;
-ModelViewMatrix[6] = 0;
-ModelViewMatrix[7] = 0;
-ModelViewMatrix[8] = 0;
-ModelViewMatrix[9] = 0;
-ModelViewMatrix[10] = 1;
-ModelViewMatrix[11] = 0;
-ModelViewMatrix[12] = 0;
-ModelViewMatrix[13] = 0;
-ModelViewMatrix[14] = 0;
-ModelViewMatrix[15] = 1;
-*/
-int modelview_location = glGetUniformLocation(prg_id, "ModelViewMatrix");
-glUniformMatrix4fv(modelview_location, 1, false, ModelViewMatrix);
-
-
-
-
-
-
-
-
-
-
-
-
+update_modelviewmatrix();
 
 
 
@@ -1035,7 +1027,7 @@ glDeleteShader(vertexShader);
 glDeleteShader(fragmentShader);
 
 glDisable(GL_CULL_FACE);
-//glEnable(GL_DEPTH_TEST);
+glEnable(GL_DEPTH_TEST);
 //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 while (!glfwWindowShouldClose(window))
@@ -1044,9 +1036,13 @@ while (!glfwWindowShouldClose(window))
 
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
+
     glUseProgram(prg_id);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, (void*)0);

@@ -2,11 +2,20 @@
 out vec4 fragColor;
 
 in vec2 TexCoord;
-in vec4 vertexColor;
+in vec4 vertexColor; //for testing purposes
+in float z_negative;
 
-uniform sampler2D texture_one;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
  
 void main()
 {
-fragColor = vertexColor;
+if (z_negative == 1){
+	fragColor = texture(texture1, TexCoord);
+}else{
+	fragColor = texture(texture2, TexCoord);
 }
+}
+//test_cases
+//fragColor = vec4(z_negative, 0.0, 1.0, 1.0);
+//fragColor = texture(texture1, TexCoord);
