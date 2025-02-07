@@ -10,12 +10,14 @@ uniform sampler2D texture2;
  
 void main()
 {
-if (z_negative == 1){
-	fragColor = texture(texture1, TexCoord);
-}else{
+if (z_negative == 0.0f){
 	fragColor = texture(texture2, vec2(1.0-TexCoord.x, TexCoord.y));
+}else{
+	fragColor = texture(texture1, TexCoord);
 }
+
 }
 //test_cases
 //fragColor = vec4(z_negative, 0.0, 1.0, 1.0);
 //fragColor = texture(texture1, TexCoord);
+//fragColor = texture(texture2, vec2(1.0-TexCoord.x, TexCoord.y));
