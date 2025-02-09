@@ -1,6 +1,7 @@
 #version 330
 layout (location = 0) in vec3 cPosition;
 layout (location = 1) in vec2 aTexCoord;
+layout (location = 2) in vec3 aNormal;
 
 uniform mat4 perspective_matrix;
 uniform mat4 ModelViewMatrix;
@@ -8,6 +9,8 @@ uniform mat4 ModelViewMatrix;
 out vec2 TexCoord;
 out vec4 vertexColor;
 out float z_negative;
+out vec3 normal;
+out vec3 fragmentPos;
 
 void main()
 {
@@ -19,5 +22,7 @@ if (cPosition.z < 0){
 }else{
 	z_negative = 0.0;
 }
+normal = aNormal*mat3(ModelViewMatrix);
+fragmentPos = vec3(ModelViewMatrix*vec4(cPosition, 1.0));
 
 }

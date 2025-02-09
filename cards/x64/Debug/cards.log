@@ -2,4 +2,5 @@
 C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(22,18): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
 C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(23,19): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
 C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(24,21): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+C:\Users\Robert Horn\Desktop\Project\cards\cards\main.cpp(25,22): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
   cards.vcxproj -> C:\Users\Robert Horn\Desktop\Project\cards\x64\Debug\cards.exe
