@@ -15,7 +15,7 @@ uniform vec3 lightPos;
 void main()
 {
 //ambient light
-float ambient_strength = 0.1f;
+float ambient_strength = 0.2f;
 vec3 light_color = vec3(1.0f,1.0f,1.0f);
 vec3 ambientLight = ambient_strength*light_color;
 
@@ -26,21 +26,30 @@ float diff = max(dot(norm, light_direction), 0.0);
 vec3 diffuseLight = diff * light_color;
 
 //specular light
-float specular_strength = 0.5f;
+float specular_strength = 0.3f;
 vec3 viewDir = normalize(-fragmentPos);
 vec3 reflectDir = reflect(-light_direction, norm);
-float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 32);
+float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 16);
 vec3 specularLight = specular_strength * spec * light_color;
 
 //foil reflection
 float dot1 = dot(viewDir, reflectDir);
 float winkel = acos(dot1);
 float min_winkel = 5;
-float closeness = 1;
+float closeness = 0.3;
 float x = (mod(winkel, closeness))/(closeness);
 vec2 rainbow_coord = vec2(x, 0.5f); //x between 0 and 1
-vec3 reflection_color = 0.3f*vec3(texture(rainbow, rainbow_coord, 0.5f));
 
+float intensity = 0.2f;
+float darkness_at_texel = texture(texture1, TexCoord).x + texture(texture1, TexCoord).y + texture(texture1, TexCoord).z;
+if (darkness_at_texel < 1.0) {
+	intensity = 0.0f;
+}
+if (darkness_at_texel > 2.6) {
+	intensity = 0.8f;
+}
+
+vec3 reflection_color = intensity*vec3(texture(rainbow, rainbow_coord, 0.5f));
 //vec3 refection_color = vec3(texture(rainbow, rainbow_coord));
 
 //overall light

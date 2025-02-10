@@ -1232,7 +1232,7 @@ update_modelviewmatrix();
 
 //light_definitions
 int light_location = glGetUniformLocation(prg_id, "lightPos");
-glUniform3f(light_location, 3.0f, 2.0f, 1.0f);
+glUniform3f(light_location, 6.0f, 2.0f, 5.0f);
 
 glDeleteShader(vertexShader);
 glDeleteShader(fragmentShader);
