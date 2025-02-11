@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "cards\\fragment_shader_sourcecode.txt",
               "ToolTip": "C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\fragment_shader_sourcecode.txt",
               "RelativeToolTip": "cards\\fragment_shader_sourcecode.txt",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACwAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2025-01-31T15:04:46.099Z",
               "EditorCaption": ""
@@ -47,7 +47,8 @@
               "RelativeToolTip": "cards\\vertex_shader_sourcecode.txt",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2025-01-31T14:54:35.942Z"
+              "WhenOpened": "2025-01-31T14:54:35.942Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -57,7 +58,7 @@
               "RelativeDocumentMoniker": "cards\\main.cpp",
               "ToolTip": "C:\\Users\\Robert Horn\\Desktop\\Project\\cards\\cards\\main.cpp",
               "RelativeToolTip": "cards\\main.cpp",
-              "ViewState": "AgIAALoEAAAAAAAAAAAiwNIEAAApAAAAAAAAAA==",
+              "ViewState": "AgIAADoDAAAAAAAAAAAiwE8DAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-01-28T14:44:18.382Z",
               "EditorCaption": ""

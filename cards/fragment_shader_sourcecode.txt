@@ -29,14 +29,14 @@ vec3 diffuseLight = diff * light_color;
 float specular_strength = 0.3f;
 vec3 viewDir = normalize(-fragmentPos);
 vec3 reflectDir = reflect(-light_direction, norm);
-float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 16);
+float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 64);
 vec3 specularLight = specular_strength * spec * light_color;
 
 //foil reflection
 float dot1 = dot(viewDir, reflectDir);
 float winkel = acos(dot1);
 float min_winkel = 5;
-float closeness = 0.3;
+float closeness = 0.5;
 float x = (mod(winkel, closeness))/(closeness);
 vec2 rainbow_coord = vec2(x, 0.5f); //x between 0 and 1
 
@@ -49,15 +49,16 @@ if (darkness_at_texel > 2.6) {
 	intensity = 0.8f;
 }
 
-vec3 reflection_color = intensity*vec3(texture(rainbow, rainbow_coord, 0.5f));
+vec3 reflection_color = intensity*vec3(texture(rainbow, rainbow_coord));
 //vec3 refection_color = vec3(texture(rainbow, rainbow_coord));
 
 //overall light
-vec3 ligthing = (ambientLight + specularLight + diffuseLight + reflection_color);
+vec3 ligthing_1 = (ambientLight + specularLight + diffuseLight + reflection_color);
+vec3 ligthing_2 = (ambientLight + specularLight + diffuseLight);
 
 //texture ligthing
-vec4 texture1_light = texture(texture1, TexCoord) * (vec4(ligthing, 1.0f));
-vec4 texture2_light = texture(texture2, vec2(1.0-TexCoord.x, TexCoord.y)) * (vec4(ligthing, 1.0f));
+vec4 texture1_light = texture(texture1, TexCoord) * (vec4(ligthing_1, 1.0f));
+vec4 texture2_light = texture(texture2, vec2(1.0-TexCoord.x, TexCoord.y)) * (vec4(ligthing_2, 1.0f));
 
 if (z_negative == 0.0f){
 	fragColor = texture2_light;

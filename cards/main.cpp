@@ -21,7 +21,7 @@ unsigned int prg_id;
 //card measures in cm
 float card_width = 6.35;
 float card_height = 8.89;
-float corner_radius = 0.35;
+float corner_radius = 0.25;
 float card_thickness = 0.03048;
 
 //testing
@@ -172,370 +172,6 @@ void processInput(GLFWwindow* window) {
         update_modelviewmatrix();
     }
 }
-/*
-float * normalize_card_measurements(float width, float height) {
-    
-    float ratio = height / width;
-    height = 1;
-    width = height / ratio;
-    float help[2] = { width, height };
-
-    return help;
-
-}
-
-float * create_card_vertices(float width, float height, float radius, float thickness) {
-    float ratio = height / width;
-    float ratio_r = height / radius;
-    float ratio_t = height / thickness;
-    height = 1;
-    width = height / ratio;
-    radius = height / ratio_r;
-    thickness = height / ratio_t;
-
-    //all x,y values possible
-    float x_end = width;
-    float x_radius = width - radius;
-    float y_end = height;
-    float y_radius = height - radius;
-
-    //create box_vertices
-    float vertices[72] = {
-      x_end,      y_radius   , thickness,
-      x_end,     -y_radius   , thickness,
-      x_radius,   y_end      , thickness,
-      x_radius,   y_radius   , thickness,
-      x_radius,  -y_radius   , thickness,
-      x_radius,  -y_end      , thickness,
-      -x_radius,  y_end      , thickness,
-      -x_radius,  y_radius   , thickness,
-      -x_radius, -y_radius   , thickness,
-      -x_radius, -y_end      , thickness,
-      -x_end,     y_radius   , thickness,
-      -x_end,    -y_radius   , thickness,
-      x_end,      y_radius   , -thickness,
-      x_end,     -y_radius   , -thickness,
-      x_radius,   y_end      , -thickness,
-      x_radius,   y_radius   , -thickness,
-      x_radius,  -y_radius   , -thickness,
-      x_radius,  -y_end      , -thickness,
-      -x_radius,  y_end      , -thickness,
-      -x_radius,  y_radius   , -thickness,
-      -x_radius, -y_radius   , -thickness,
-      -x_radius, -y_end      , -thickness,
-      -x_end,     y_radius   , -thickness,
-      -x_end,    -y_radius   , -thickness
-    };
-
-
-    int size = sizeof(vertices) / sizeof(vertices[0]);
-    std::cout << size;
-    std::cout << "\n";
-    for (int i = 0; i < size; i++) {
-        std::cout << vertices[i];
-        std::cout << ", ";
-    };
-    std::cout << "\n";
-
-    
-
-    
-  
-    return vertices;
-
-}
-
-unsigned int* create_card_indices() {
-    
-    unsigned int indices[] = {
-        //rim counterclockwise
-        0, 1,12,
-        1,12,13,
-        0, 3,12,
-        3,12,15,
-        3, 2,15,
-        2,15,14,
-        2, 6,14,
-        6,14,18,
-        6,7,18,
-        7,18,19,
-        7,10,19,
-        10,19,22,
-        10,11,22,
-        11,22,23,
-        11,8,23,
-        8,23,20,
-        8,9,20,
-        9,20,21,
-        9,5,21,
-        5,21,17,
-        5,4,17,
-        4,17,16,
-        4,1,16,
-        1,16,13,
-
-        //faces
-        0,4,1,
-        0,3,4,
-        3,2,6,
-        6,3,7,
-        3,7,4,
-        7,8,4,
-        7,10,8,
-        10,8,11,
-        8,9,5,
-        8,5,4,
-
-        12,16,13,
-        12,15,16,
-        15,14,18,
-        18,15,19,
-        15,19,16,
-        19,20,16,
-        19,22,20,
-        22,20,23,
-        20,21,17,
-        20,17,16
-    };
-    wi = 84;
-int new_vertice = 24;
-
-//tr:(0,2)
-indices[wi] = 0;
-indices[wi + 1] = new_vertice;
-indices[wi + 2] = 3;
-
-indices[wi + 3] = 0;
-indices[wi + 4] = new_vertice;
-indices[wi + 5] = 12;
-
-indices[wi + 6] = new_vertice + 1;
-indices[wi + 7] = new_vertice;
-indices[wi + 8] = 12;
-
-indices[wi + 9] = 12;
-indices[wi + 10] = new_vertice + 1;
-indices[wi + 11] = 15;
-
-wi = wi + 12;
-
-for (int i = 0; i < 8; i++) {
-    indices[wi] = new_vertice;
-    indices[wi + 1] = new_vertice + 2;
-    indices[wi + 2] = 3;
-
-    indices[wi + 3] = new_vertice;
-    indices[wi + 4] = new_vertice + 2;
-    indices[wi + 5] = new_vertice + 1;
-
-    indices[wi + 6] = new_vertice + 3;
-    indices[wi + 7] = new_vertice + 2;
-    indices[wi + 8] = new_vertice + 1;
-
-    indices[wi + 9] = new_vertice + 1;
-    indices[wi + 10] = new_vertice + 3;
-    indices[wi + 11] = 15;
-
-    wi = wi + 12;
-    new_vertice = new_vertice + 2;
-}
-indices[wi] = new_vertice;
-indices[wi + 1] = 2;
-indices[wi + 2] = 3;
-
-indices[wi + 3] = new_vertice;
-indices[wi + 4] = 2;
-indices[wi + 5] = new_vertice + 1;
-
-indices[wi + 6] = 14;
-indices[wi + 7] = 2;
-indices[wi + 8] = new_vertice + 1;
-
-indices[wi + 9] = new_vertice + 1;
-indices[wi + 10] = 14;
-indices[wi + 11] = 15;
-
-wi = wi + 12;
-new_vertice = new_vertice + 2;
-
-
-//tl:(6,10)
-indices[wi] = 6;
-indices[wi + 1] = new_vertice;
-indices[wi + 2] = 7;
-
-indices[wi + 3] = 6;
-indices[wi + 4] = new_vertice;
-indices[wi + 5] = 18;
-
-indices[wi + 6] = new_vertice + 1;
-indices[wi + 7] = new_vertice;
-indices[wi + 8] = 18;
-
-indices[wi + 9] = 18;
-indices[wi + 10] = new_vertice + 1;
-indices[wi + 11] = 19;
-
-wi = wi + 12;
-
-for (int i = 0; i < 8; i++) {
-    indices[wi] = new_vertice;
-    indices[wi + 1] = new_vertice + 2;
-    indices[wi + 2] = 7;
-
-    indices[wi + 3] = new_vertice;
-    indices[wi + 4] = new_vertice + 2;
-    indices[wi + 5] = new_vertice + 1;
-
-    indices[wi + 6] = new_vertice + 3;
-    indices[wi + 7] = new_vertice + 2;
-    indices[wi + 8] = new_vertice + 1;
-
-    indices[wi + 9] = new_vertice + 1;
-    indices[wi + 10] = new_vertice + 3;
-    indices[wi + 11] = 19;
-
-    wi = wi + 12;
-    new_vertice = new_vertice + 2;
-}
-indices[wi] = new_vertice;
-indices[wi + 1] = 10;
-indices[wi + 2] = 7;
-
-indices[wi + 3] = new_vertice;
-indices[wi + 4] = 10;
-indices[wi + 5] = new_vertice + 1;
-
-indices[wi + 6] = 22;
-indices[wi + 7] = 10;
-indices[wi + 8] = new_vertice + 1;
-
-indices[wi + 9] = new_vertice + 1;
-indices[wi + 10] = 22;
-indices[wi + 11] = 19;
-
-wi = wi + 12;
-new_vertice = new_vertice + 2;
-
-//br:(1,5)
-indices[wi] = 1;
-indices[wi + 1] = new_vertice;
-indices[wi + 2] = 4;
-
-indices[wi + 3] = 1;
-indices[wi + 4] = new_vertice;
-indices[wi + 5] = 13;
-
-indices[wi + 6] = new_vertice + 1;
-indices[wi + 7] = new_vertice;
-indices[wi + 8] = 13;
-
-indices[wi + 9] = 13;
-indices[wi + 10] = new_vertice + 1;
-indices[wi + 11] = 16;
-
-wi = wi + 12;
-
-for (int i = 0; i < 8; i++) {
-    indices[wi] = new_vertice;
-    indices[wi + 1] = new_vertice + 2;
-    indices[wi + 2] = 4;
-
-    indices[wi + 3] = new_vertice;
-    indices[wi + 4] = new_vertice + 2;
-    indices[wi + 5] = new_vertice + 1;
-
-    indices[wi + 6] = new_vertice + 3;
-    indices[wi + 7] = new_vertice + 2;
-    indices[wi + 8] = new_vertice + 1;
-
-    indices[wi + 9] = new_vertice + 1;
-    indices[wi + 10] = new_vertice + 3;
-    indices[wi + 11] = 16;
-
-    wi = wi + 12;
-    new_vertice = new_vertice + 2;
-}
-indices[wi] = new_vertice;
-indices[wi + 1] = 5;
-indices[wi + 2] = 4;
-
-indices[wi + 3] = new_vertice;
-indices[wi + 4] = 5;
-indices[wi + 5] = new_vertice + 1;
-
-indices[wi + 6] = 17;
-indices[wi + 7] = 5;
-indices[wi + 8] = new_vertice + 1;
-
-indices[wi + 9] = new_vertice + 1;
-indices[wi + 10] = 17;
-indices[wi + 11] = 16;
-
-wi = wi + 12;
-new_vertice = new_vertice + 2;
-
-//bl:(9,11)
-indices[wi] = 9;
-indices[wi + 1] = new_vertice;
-indices[wi + 2] = 8;
-
-indices[wi + 3] = 9;
-indices[wi + 4] = new_vertice;
-indices[wi + 5] = 21;
-
-indices[wi + 6] = new_vertice + 1;
-indices[wi + 7] = new_vertice;
-indices[wi + 8] = 21;
-
-indices[wi + 9] = 21;
-indices[wi + 10] = new_vertice + 1;
-indices[wi + 11] = 20;
-
-wi = wi + 12;
-
-for (int i = 0; i < 8; i++) {
-    indices[wi] = new_vertice;
-    indices[wi + 1] = new_vertice + 2;
-    indices[wi + 2] = 8;
-
-    indices[wi + 3] = new_vertice;
-    indices[wi + 4] = new_vertice + 2;
-    indices[wi + 5] = new_vertice + 1;
-
-    indices[wi + 6] = new_vertice + 3;
-    indices[wi + 7] = new_vertice + 2;
-    indices[wi + 8] = new_vertice + 1;
-
-    indices[wi + 9] = new_vertice + 1;
-    indices[wi + 10] = new_vertice + 3;
-    indices[wi + 11] = 20;
-
-    wi = wi + 12;
-    new_vertice = new_vertice + 2;
-}
-indices[wi] = new_vertice;
-indices[wi + 1] = 11;
-indices[wi + 2] = 8;
-
-indices[wi + 3] = new_vertice;
-indices[wi + 4] = 11;
-indices[wi + 5] = new_vertice + 1;
-
-indices[wi + 6] = 23;
-indices[wi + 7] = 11;
-indices[wi + 8] = new_vertice + 1;
-
-indices[wi + 9] = new_vertice + 1;
-indices[wi + 10] = 23;
-indices[wi + 11] = 20;
-
-wi = wi + 12;
-new_vertice = new_vertice + 2;
-
-    
-    return indices;
-}*/
 
 void createCornerFaceIndices(unsigned int * indices, unsigned int vertice_current, unsigned int corner_number, unsigned int start, unsigned int end, int writing_start) {
     indices[writing_start] = corner_number;
@@ -623,6 +259,7 @@ float x = normalized_values[0];
 //float * vertices = create_card_vertices(card_width, card_height, corner_radius, card_thickness);
 //unsigned int * indices = create_card_indices();
 
+//berechnung vertices
 
 float ratio = card_height / card_width;
 float ratio_r = card_height / (corner_radius*3);
@@ -1127,7 +764,7 @@ glUseProgram(prg_id);
 
 
 //texture
-unsigned int texture1, texture2, rainbow;
+unsigned int texture1, texture2;
 glGenTextures(1, &texture1);
 glBindTexture(GL_TEXTURE_2D, texture1);
 
@@ -1186,13 +823,14 @@ else
 
 //rainbow_texture
 
+unsigned int rainbow;
 glGenTextures(2, &rainbow);
 glBindTexture(GL_TEXTURE_2D, rainbow);
 
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
 glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
@@ -1200,7 +838,7 @@ while ((err = glGetError()) != GL_NO_ERROR) {
     cerr << "glTexParameteri. OpenGL error: " << err << endl;
 }
 
-data = stbi_load("images/rainbow_gradient.jpg", &width_tex, &height_tex, &nrChannels, 0);
+data = stbi_load("images/rainbow_gradient.png", &width_tex, &height_tex, &nrChannels, 0);
 if (data)
 {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_tex, height_tex, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -1269,8 +907,13 @@ while (!glfwWindowShouldClose(window))
    
     
 }
+glBindTexture(GL_TEXTURE_2D, 0);
+glDeleteTextures(0, &texture1);
+glDeleteTextures(1, &texture2);
+glDeleteTextures(2, &rainbow);
+
 glfwTerminate();
 return 0;
 
-}
+ }
 
