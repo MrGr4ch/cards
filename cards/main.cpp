@@ -824,7 +824,7 @@ else
 //rainbow_texture
 
 unsigned int rainbow;
-glGenTextures(2, &rainbow);
+glGenTextures(1, &rainbow);
 glBindTexture(GL_TEXTURE_2D, rainbow);
 
 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -838,20 +838,17 @@ while ((err = glGetError()) != GL_NO_ERROR) {
     cerr << "glTexParameteri. OpenGL error: " << err << endl;
 }
 
-data = stbi_load("images/rainbow_gradient.png", &width_tex, &height_tex, &nrChannels, 0);
+data = stbi_load("images/rainbow_gradient.jpg", &width_tex, &height_tex, &nrChannels, 0);
 if (data)
 {
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width_tex, height_tex, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 else
 {
-    std::cout << "Failed to load rainbow_gradient" << std::endl;
+    std::cout << "Failed to load texture2" << std::endl;
 }
-while ((err = glGetError()) != GL_NO_ERROR) {
-    cerr << "glTexParameteri 2. OpenGL error: " << err << endl;
-}
-
 stbi_image_free(data);
 
 
